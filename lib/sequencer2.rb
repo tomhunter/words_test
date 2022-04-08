@@ -5,7 +5,7 @@ class Sequencer
   EXPORT_FILENAME_WORDS = 'words'.freeze
 
   def initialize(dictionary_filename)
-    @filename = dictionary_filename
+    @import_filename = dictionary_filename
   end
 
   def call
@@ -16,12 +16,12 @@ class Sequencer
 
   private
 
-  attr_accessor :filename
+  attr_accessor :import_filename
 
   # Export the array into file, one line per word
   #
-  def export_array(filename, array)
-    File.open(filename, "w+") do |file|
+  def export_array(export_filename, array)
+    File.open(export_filename, "w+") do |file|
       file.puts(array)
     end
   end
@@ -37,11 +37,9 @@ class Sequencer
 
   # Return dictionary file. Exit program and display error if unable to open file.
   #
-  def file
-    filename = ARGV[0] || "dictionary words" # use filename in exercise as default
-
+  def import_file
     begin
-      file = File.open(filename)
+      File.open(import_filename)
     rescue
       puts "  ERROR: Unable to open file"
       exit
@@ -58,7 +56,7 @@ class Sequencer
   def sequence_dictionary
     bucket = {}
 
-    file.each_line do |line|
+    import_file.each_line do |line|
       word = extract_word(line)
       next if word.size < 4
 
