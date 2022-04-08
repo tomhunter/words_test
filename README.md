@@ -2,9 +2,9 @@
 
 ## Two Approaches
 
-[lib/sequencer.rb](lib/sequencer.rb) - Coded up a quick proof of concept to accomplish task. Contains some debugging output for testing. I was initially curious about overall processing time, but this ran within seconds locally using the larger dictionary. Therefore performance/algorithm optimizaiton seems premature at this point.  If this were a one-off script or data migration, I would call it done.  I'm a firm believer in pragmmatic programming.  A task should only require as much time and complexity as it needs in order to complete the task, and no more.
+[lib/sequencer.rb](lib/sequencer.rb) - Coded up a quick proof of concept. Contains some debugging output for testing. I was initially curious about overall processing time, but this ran within seconds locally using the larger dictionary. Therefore performance/algorithm optimizaiton seems premature.  If this were a one-off script or data migration, I would call it done. I'm a strong believer in pragmmatic programming - a task should only require as much time and complexity as it needs in order to complete the task, and no more.
 
-[lib/sequencer2.rb](lib/sequencer1.rb) - In the spirit of the exercise, I broke this out into a more object-oriented approach, although it is still a bit contrived.
+[lib/sequencer2.rb](lib/sequencer2.rb) - Code broken out into a more extendable, maintainable, object-oriented approach.
 
 ## Additional Considerations
 
