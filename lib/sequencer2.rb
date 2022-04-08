@@ -30,6 +30,15 @@ class Sequencer
     end
   end
 
+  # Extract valid word from line given:
+  #
+  # * Convert to lowercase to ignore casing - Casing should not create a unique sequence.
+  # * Use letters only - Numbers and special characters should not create a unique sequence.
+  #
+  def extract_word(line)
+    line.chomp.downcase.gsub(/[^a-z]/, '')
+  end
+
   # Return dictionary file. Exit program and display error if unable to open file.
   #
   def file
@@ -56,7 +65,7 @@ class Sequencer
     bucket = {}
 
     file.each_line do |line|
-      word = line.chomp.downcase
+      word = extract_word(line)
       next if word.size < 4
 
       (word.size-3).times do |n|

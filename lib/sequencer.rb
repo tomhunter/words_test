@@ -15,7 +15,7 @@ line_count = 0 # Not necessary, informational purposes only
 
 dictionary_file.each_line do |line|
   line_count += 1
-  word = line.chomp.downcase
+  word = line.chomp.downcase.gsub(/[^a-z]/, '')
   next if word.size < 4
 
   puts "  #{word}"
