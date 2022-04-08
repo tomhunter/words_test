@@ -9,24 +9,20 @@ class Sequencer
   end
 
   def call
-    sequencer_result = sequence_dictionary
-    export(sequencer_result)
+    sequences, words = sequence_dictionary
+    export_array(EXPORT_FILENAME_SEQUENCES, sequences)
+    export_array(EXPORT_FILENAME_WORDS, words)
   end
 
   private
 
   attr_accessor :filename
 
-  # Export the sequences & words data
+  # Export the array into file, one line per word
   #
-  def export(result)
-    File.open(EXPORT_FILENAME_SEQUENCES, "w+") do |sequences_file|
-      sequences_file.puts(result.keys)
-    end
-
-    File.open(EXPORT_FILENAME_WORDS, "w+") do |words_file|
-      words = result.values.map {|v| v[:word] }
-      words_file.puts(words)
+  def export_array(filename, array)
+    File.open(filename, "w+") do |file|
+      file.puts(array)
     end
   end
 
@@ -43,7 +39,6 @@ class Sequencer
   #
   def file
     filename = ARGV[0] || "dictionary words" # use filename in exercise as default
-    puts "  Reading from file: #{filename}\n"
 
     begin
       file = File.open(filename)
@@ -55,11 +50,10 @@ class Sequencer
 
   # Return result of parsing the dictionary data in the following format:
   #
-  #   {
-  #     'carr' => { word: 'carrot', count: 1 },
-  #     'arro' => { word: 'carrot', count: 1 },
-  #     'rrot' => { word: 'carrot', count: 1 }
-  #   }
+  # [
+  #   ["carr", "give", "rots", "rows", "rrot", "rrow"],
+  #   ["carrots", "give", "carrots", "arrows", "carrots", "arrows"]
+  # ]
   #
   def sequence_dictionary
     bucket = {}
@@ -81,7 +75,10 @@ class Sequencer
     end
 
     bucket.reject! {|k,v| v[:count] > 1 }
-    bucket
+    sequences = bucket.keys
+    words = bucket.values.map {|v| v[:word] }
+
+    [sequences, words]
   end
 end
 
